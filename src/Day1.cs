@@ -1,4 +1,3 @@
-
 using System;
 using System.Linq;
 
@@ -8,9 +7,8 @@ namespace advent_of_code_2020
     {
         public Day1()
         {
-            Console.WriteLine("Day 1");
-            Console.WriteLine("Answer for Part A is {0}", partA());
-            Console.WriteLine("Answer for Part B is {0}", partB());
+            Console.WriteLine("Answer for Day 1 Part A is {0}", partA());
+            Console.WriteLine("Answer for Day 1 Part B is {0}", partB());
         }
 
         /** --- Day 1: Report Repair ---
@@ -58,7 +56,7 @@ namespace advent_of_code_2020
             return -1;
         }
 
-        /* --- Part Two ---
+        /** --- Part Two ---
         The Elves in accounting are thankful for your help; one of them even offers you a starfish coin they had left over from a past vacation. 
         They offer you a second one if you can find three numbers in your expense report that meet the same criteria.
     
