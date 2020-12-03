@@ -10,11 +10,11 @@ namespace advent_of_code_2020
         {
             // Adds the User Secrets
             var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
-            
+
             // Loads the Advent of Code session key.
             // This is me playing around with UserSecrets and is going to be used to fetch input straight from AoC
             var secretProvider = config.Providers.First();
-            if (!secretProvider.TryGet("AdventOfCode:Session", out var aocSessionKey) ) return;
+            if (!secretProvider.TryGet("AdventOfCode:Session", out var aocSessionKey)) return;
 
             string welcomeText = @"
  █████╗ ██████╗ ██╗   ██╗███████╗███╗   ██╗████████╗     ██████╗ ███████╗     ██████╗ ██████╗ ██████╗ ███████╗    ██████╗  ██████╗ ██████╗  ██████╗     
@@ -40,13 +40,16 @@ namespace advent_of_code_2020
             switch (input)
             {
                 case "1":
-                    Day1 a = new Day1();
+                    var a = new Day1();
                     break;
                 case "2":
-                    Day2 b = new Day2();
+                    var b = new Day2();
+                    break;
+                case "3":
+                    var c = new Day3();
                     break;
                 default:
-                    Day2 z = new Day2();
+                    var z = new Day3();
                     break;
             }
         }

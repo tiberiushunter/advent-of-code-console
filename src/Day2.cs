@@ -11,7 +11,7 @@ namespace advent_of_code_2020
             Console.WriteLine("Answer for Day 2 Part B is {0}", partB());
         }
 
-        /**- -- Day 2: Password Philosophy ---
+        /** --- Day 2: Password Philosophy ---
         Your flight departs in a few days from the coastal airport; the easiest way down to the coast from here is via toboggan.
 
         The shopkeeper at the North Pole Toboggan Rental Shop is having a bad day. 

@@ -30,7 +30,7 @@ To run the code ensure you have the [.NET 5 SDK][6]
 
 Then from the root directory run the command `dotnet restore` to ensure you have the required NuGet packages installed.
 
-Next, we need to set up the UserSecret "AdventOfCode:Session" To do this run the command
+Next, we need to set up the UserSecret "AdventOfCode:Session" To do this run the command:
 
 `dotnet user-secrets set "AdventOfCode:Session" "y0ur_s3ss10n_k3y*"`
 
