@@ -48,8 +48,11 @@ namespace advent_of_code_2020
                 case "3":
                     var c = new Day3();
                     break;
+                case "4":
+                    var d = new Day4();
+                    break;
                 default:
-                    var z = new Day3();
+                    var z = new Day4();
                     break;
             }
         }
