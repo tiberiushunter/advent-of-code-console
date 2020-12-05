@@ -163,9 +163,13 @@ namespace advent_of_code_2020
                         .Select(value => value.Split(':'))
                         .ToDictionary(pair => pair[0], pair => pair[1]);
 
-                    if (Int32.Parse(d["byr"]) >= 1920 && Int32.Parse(d["byr"]) <= 2002 &&
-                            Int32.Parse(d["iyr"]) >= 2010 && Int32.Parse(d["iyr"]) <= 2020 &&
-                            Int32.Parse(d["eyr"]) >= 2020 && Int32.Parse(d["eyr"]) <= 2030)
+                    int byr = Int32.Parse(d["byr"]);
+                    int iyr = Int32.Parse(d["iyr"]);
+                    int eyr = Int32.Parse(d["eyr"]);
+
+                    if (byr >= 1920 && byr <= 2002 &&
+                        iyr >= 2010 && iyr <= 2020 &&
+                        eyr >= 2020 && eyr <= 2030)
                     {
                         if (d["hgt"].EndsWith("cm") &&
                             (Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) >= 150 && Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) <= 193) ||
