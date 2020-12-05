@@ -69,10 +69,11 @@ namespace advent_of_code_2020
                     new Day2();
                     new Day3();
                     new Day4();
+                    new Day5();
                     break;
                 default:
                     Console.WriteLine("Defaulting to Latest Day \n");
-                    new Day4();
+                    new Day5();
                     break;
             }
         }

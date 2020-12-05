@@ -19,7 +19,7 @@ namespace advent_of_code_2020
             Console.WriteLine("Day 4 - Part B: {0}\n", partB());
         }
 
-        /**  --- Day 4: Passport Processing ---
+        /** --- Day 4: Passport Processing ---
         You arrive at the airport only to realize that you grabbed your North Pole Credentials instead of your passport. 
         While these documents are extremely similar, North Pole Credentials aren't issued by a country and therefore aren't actually valid documentation for travel in most of the world.
 
@@ -72,14 +72,7 @@ namespace advent_of_code_2020
             int count = 0;
             for (int i = 0; i < inputArr.Length; i++)
             {
-                // Check the current passport has all the required fields.
-                if (inputArr[i].Contains("byr:") &&
-                    inputArr[i].Contains("iyr:") &&
-                    inputArr[i].Contains("eyr:") &&
-                    inputArr[i].Contains("hgt:") &&
-                    inputArr[i].Contains("hcl:") &&
-                    inputArr[i].Contains("ecl:") &&
-                    inputArr[i].Contains("pid:"))
+                if (hasAllRequiredFields(inputArr[i]))
                 {
                     count++;
                 }
@@ -163,40 +156,29 @@ namespace advent_of_code_2020
 
             for (int i = 0; i < inputArr.Length; i++)
             {
-                // First check the current passport has all the required fields.
-                if (inputArr[i].Contains("byr:") &&
-                    inputArr[i].Contains("iyr:") &&
-                    inputArr[i].Contains("eyr:") &&
-                    inputArr[i].Contains("hgt:") &&
-                    inputArr[i].Contains("hcl:") &&
-                    inputArr[i].Contains("ecl:") &&
-                    inputArr[i].Contains("pid:"))
+                if (hasAllRequiredFields(inputArr[i]))
                 {
                     // Then add the current passport to a dictionary
                     Dictionary<string, string> d = inputArr[i].Replace("\n", " ").Split(' ')
                         .Select(value => value.Split(':'))
                         .ToDictionary(pair => pair[0], pair => pair[1]);
 
-                    if (Int32.Parse(d["byr"]) >= 1920 && Int32.Parse(d["byr"]) <= 2002)
+                    if (Int32.Parse(d["byr"]) >= 1920 && Int32.Parse(d["byr"]) <= 2002 &&
+                            Int32.Parse(d["iyr"]) >= 2010 && Int32.Parse(d["iyr"]) <= 2020 &&
+                            Int32.Parse(d["eyr"]) >= 2020 && Int32.Parse(d["eyr"]) <= 2030)
                     {
-                        if (Int32.Parse(d["iyr"]) >= 2010 && Int32.Parse(d["iyr"]) <= 2020)
+                        if (d["hgt"].EndsWith("cm") &&
+                            (Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) >= 150 && Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) <= 193) ||
+                            d["hgt"].EndsWith("in") &&
+                            (Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) >= 59 && Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) <= 76))
                         {
-                            if (Int32.Parse(d["eyr"]) >= 2020 && Int32.Parse(d["eyr"]) <= 2030)
+                            if (Regex.Match(d["hcl"], "^#(?:[0-9a-fA-F]{3}){1,2}$").Success)
                             {
-                                if (d["hgt"].EndsWith("cm") &&
-                                    (Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) >= 150 && Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) <= 193) ||
-                                    d["hgt"].EndsWith("in") &&
-                                    (Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) >= 59 && Int32.Parse(d["hgt"].Substring(0, d["hgt"].Length - 2)) <= 76))
+                                if (eclValidArr.Any(s => d["ecl"].Contains(s)))
                                 {
-                                    if (Regex.Match(d["hcl"], "^#(?:[0-9a-fA-F]{3}){1,2}$").Success)
+                                    if (d["pid"].Length == 9)
                                     {
-                                        if (eclValidArr.Any(s => d["ecl"].Contains(s)))
-                                        {
-                                            if (d["pid"].Length == 9)
-                                            {
-                                                count++;
-                                            }
-                                        }
+                                        count++;
                                     }
                                 }
                             }
@@ -205,6 +187,21 @@ namespace advent_of_code_2020
                 }
             }
             return count;
+        }
+
+        private bool hasAllRequiredFields(string input)
+        {
+            if (input.Contains("byr:") &&
+                    input.Contains("iyr:") &&
+                    input.Contains("eyr:") &&
+                    input.Contains("hgt:") &&
+                    input.Contains("hcl:") &&
+                    input.Contains("ecl:") &&
+                    input.Contains("pid:"))
+            {
+                return true;
+            }
+            else { return false; }
         }
     }
 }
