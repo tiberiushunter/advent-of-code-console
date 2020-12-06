@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Threading;
 using Microsoft.Extensions.Configuration;
 
 namespace advent_of_code_2020

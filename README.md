@@ -24,7 +24,7 @@ A repository for my solutions to [Advent of Code 2020][aoc]. This year I'm makin
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Feel free to run through the solutions (note potential spoilers!)
+Feel free to run through the solutions (*note potential spoilers!*)
 
 To run the code ensure you have the [.NET 5 SDK][6]
 
