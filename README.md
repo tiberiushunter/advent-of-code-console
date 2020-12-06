@@ -21,10 +21,11 @@
 
 A repository for my solutions to [Advent of Code][aoc]. This project is a C# console application with [.NET 5][.net] to solve all the solutions from 2015 to 2020.
 
+Feel free to run through the solutions (*Note: Potential Spoilers!*)
+
+
 <!-- GETTING STARTED -->
 ## Getting Started
-
-Feel free to run through the solutions (*Note: Potential Spoilers!*)
 
 To run the code ensure you have the [.NET 5 SDK][.net-sdk]
 
@@ -38,7 +39,7 @@ This is used to store your Advent of Code session key to fetch the input directl
 
 Finally, run `dotnet run` to launch the application.
 
-You'll be presented with a Welcome Screen where you will be prompted to input a day number to run any of the Advent of Code solutions.
+You'll then be presented with a Welcome Screen where you will be prompted to input a year and a day (or press Enter at both prompts to run all of the Advent of Code solutions) to see the results.
 
 <!-- CONTRIBUTING -->
 ## Contributing
