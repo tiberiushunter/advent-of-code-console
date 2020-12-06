@@ -1,4 +1,4 @@
-# Advent of Code 2020
+# :christmas_tree: Advent of Code
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -19,16 +19,16 @@
 <!-- ABOUT -->
 ## About
 
-A repository for my solutions to [Advent of Code 2020][aoc]. This year I'm making a C# console application with [.NET 5][1].
+A repository for my solutions to [Advent of Code][aoc]. This project is a C# console application with [.NET 5][.net] to solve all the solutions from 2015 to 2020.
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Feel free to run through the solutions (*note potential spoilers!*)
+Feel free to run through the solutions (*Note: Potential Spoilers!*)
 
-To run the code ensure you have the [.NET 5 SDK][6]
+To run the code ensure you have the [.NET 5 SDK][.net-sdk]
 
-Then from the root directory run the command `dotnet restore` to ensure you have the required NuGet packages installed.
+Then from the root directory, run the command `dotnet restore` to ensure you have the required NuGet packages installed.
 
 Next, we need to set up the UserSecret "AdventOfCode:Session" To do this run the command:
 
@@ -53,10 +53,10 @@ Distributed under the MIT License. See [LICENSE][license-url] for more informati
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* [rxaiver's GitHub Emoji Cheat Sheet][2]
-* [Img Shields][3]
-* [Choose an Open Source License][4]
-* [othneildrew's Best README Template][5]
+* [rxaiver's GitHub Emoji Cheat Sheet][1]
+* [Img Shields][2]
+* [Choose an Open Source License][3]
+* [othneildrew's Best README Template][4]
 
 <!-- CONTACT -->
 ## Contact
@@ -75,25 +75,28 @@ Project Link: [GitHub][project-url]
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 <!-- Project Specific -->
-[project-url]: https://github.com/tiberiushunter/advent-of-code-2020
-[aoc]: https://adventofcode.com/2020/
+[project-url]: https://github.com/tiberiushunter/advent-of-code/
+
+[aoc]: https://adventofcode.com/
+[.net]: https://dotnet.microsoft.com/
+[.net-sdk]: https://dotnet.microsoft.com/download/
 
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg?style=for-the-badge
 
-[contributors-shield]: https://img.shields.io/github/contributors/tiberiushunter/advent-of-code-2020.svg?style=for-the-badge
-[contributors-url]: https://github.com/tiberiushunter/advent-of-code-2020/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/tiberiushunter/advent-of-code.svg?style=for-the-badge
+[contributors-url]: https://github.com/tiberiushunter/advent-of-code/graphs/contributors
 
-[forks-shield]: https://img.shields.io/github/forks/tiberiushunter/advent-of-code-2020.svg?style=for-the-badge
-[forks-url]: https://github.com/tiberiushunter/advent-of-code-2020/network/members
+[forks-shield]: https://img.shields.io/github/forks/tiberiushunter/advent-of-code.svg?style=for-the-badge
+[forks-url]: https://github.com/tiberiushunter/advent-of-code/network/members
 
-[stars-shield]: https://img.shields.io/github/stars/tiberiushunter/advent-of-code-2020.svg?style=for-the-badge
-[stars-url]: https://github.com/tiberiushunter/advent-of-code-2020/stargazers
+[stars-shield]: https://img.shields.io/github/stars/tiberiushunter/advent-of-code.svg?style=for-the-badge
+[stars-url]: https://github.com/tiberiushunter/advent-of-code/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/tiberiushunter/advent-of-code-2020.svg?style=for-the-badge
-[issues-url]: https://github.com/tiberiushunter/advent-of-code-2020/issues
+[issues-shield]: https://img.shields.io/github/issues/tiberiushunter/advent-of-code.svg?style=for-the-badge
+[issues-url]: https://github.com/tiberiushunter/advent-of-code/issues
 
-[license-shield]: https://img.shields.io/github/license/tiberiushunter/advent-of-code-2020.svg?style=for-the-badge
-[license-url]: https://github.com/tiberiushunter/advent-of-code-2020/blob/main/LICENSE
+[license-shield]: https://img.shields.io/github/license/tiberiushunter/advent-of-code.svg?style=for-the-badge
+[license-url]: https://github.com/tiberiushunter/advent-of-code/blob/main/LICENSE
 
 <!-- Contact Specific -->
 [github-shield]: https://img.shields.io/badge/-GitHub-black.svg?style=for-the-badge&logo=github&colorB=555
@@ -106,9 +109,7 @@ Project Link: [GitHub][project-url]
 [twitter-url]: https://twitter.com/samwelek
 
 <!-- Acknowledgement Specific -->
-[1]: https://dotnet.microsoft.com/
-[2]: https://gist.github.com/rxaviers/7360908
-[3]: https://shields.io
-[4]: https://choosealicense.com
-[5]: https://github.com/othneildrew/Best-README-Template
-[6]: https://dotnet.microsoft.com/download/
+[1]: https://gist.github.com/rxaviers/7360908
+[2]: https://shields.io
+[3]: https://choosealicense.com
+[4]: https://github.com/othneildrew/Best-README-Template
