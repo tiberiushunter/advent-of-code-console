@@ -60,7 +60,7 @@ namespace advent_of_code_2020
                         SolveAll();
                         break;
                     default:
-                        SolveDay(5);
+                        SolveDay(6);
                         break;
                 }
             }
