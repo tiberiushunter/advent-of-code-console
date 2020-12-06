@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode._2020
 {
-    class Day4 : BaseDay
+    class Day4 : DayBase
     {
         private readonly string _input = Program.GetInput(2020, 4);
         private string[] _inputArr;

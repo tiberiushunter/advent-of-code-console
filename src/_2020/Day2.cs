@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode._2020
 {
-    class Day2 : BaseDay
+    class Day2 : DayBase
     {
         private readonly string _input = Program.GetInput(2020, 2);
         private string[] _inputArr;

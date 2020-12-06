@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace AdventOfCode._2020
 {
-    class Day5 : BaseDay
+    class Day5 : DayBase
     {
         private readonly string _input = Program.GetInput(2020, 5);
         private int[] _seats;

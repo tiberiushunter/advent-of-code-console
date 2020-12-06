@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using Console = Colorful.Console;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,56 +15,55 @@ namespace AdventOfCode
         static string aocSessionKey;
         static void Main(string[] args)
         {
-            // Adds the User Secrets
+            // Adds the User Secrets Config
             var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
 
             // Loads the Advent of Code session key.
-            // This is me playing around with UserSecrets and is going to be used to fetch input straight from AoC
             var secretProvider = config.Providers.First();
             if (!secretProvider.TryGet("AdventOfCode:Session", out aocSessionKey))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Advent of Code session secret not found!");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Advent of Code session secret not found!", Color.Red);
                 Console.WriteLine("\nHave you run this?");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\tdotnet user-secrets set \"AdventOfCode:Session\" \"y0ur_s3ss10n_k3y*\"");
+                Console.WriteLine("\tdotnet user-secrets set \"AdventOfCode:Session\" \"y0ur_s3ss10n_k3y*\"", Color.Yellow);
                 return;
             }
 
             string welcomeText = @"
-            
- █████╗ ██████╗ ██╗   ██╗███████╗███╗   ██╗████████╗     ██████╗ ███████╗     ██████╗ ██████╗ ██████╗ ███████╗    ██████╗  ██████╗ ██████╗  ██████╗     
-██╔══██╗██╔══██╗██║   ██║██╔════╝████╗  ██║╚══██╔══╝    ██╔═══██╗██╔════╝    ██╔════╝██╔═══██╗██╔══██╗██╔════╝    ╚════██╗██╔═████╗╚════██╗██╔═████╗    
-███████║██║  ██║██║   ██║█████╗  ██╔██╗ ██║   ██║       ██║   ██║█████╗      ██║     ██║   ██║██║  ██║█████╗       █████╔╝██║██╔██║ █████╔╝██║██╔██║    
-██╔══██║██║  ██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║       ██║   ██║██╔══╝      ██║     ██║   ██║██║  ██║██╔══╝      ██╔═══╝ ████╔╝██║██╔═══╝ ████╔╝██║    
-██║  ██║██████╔╝ ╚████╔╝ ███████╗██║ ╚████║   ██║       ╚██████╔╝██║         ╚██████╗╚██████╔╝██████╔╝███████╗    ███████╗╚██████╔╝███████╗╚██████╔╝    
-╚═╝  ╚═╝╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚═╝          ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝ ╚═════╝
+
+ █████╗ ██████╗ ██╗   ██╗███████╗███╗   ██╗████████╗     ██████╗ ███████╗     ██████╗ ██████╗ ██████╗ ███████╗
+██╔══██╗██╔══██╗██║   ██║██╔════╝████╗  ██║╚══██╔══╝    ██╔═══██╗██╔════╝    ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+███████║██║  ██║██║   ██║█████╗  ██╔██╗ ██║   ██║       ██║   ██║█████╗      ██║     ██║   ██║██║  ██║█████╗  
+██╔══██║██║  ██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║       ██║   ██║██╔══╝      ██║     ██║   ██║██║  ██║██╔══╝  
+██║  ██║██████╔╝ ╚████╔╝ ███████╗██║ ╚████║   ██║       ╚██████╔╝██║         ╚██████╗╚██████╔╝██████╔╝███████╗
+╚═╝  ╚═╝╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚═╝          ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+                                                                                                              
 ";
 
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(welcomeText);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("\nChoose a day to solve (1-25) or type 'all' to solve all days\t");
+            Console.WriteLine(welcomeText, Color.Green);
+            Console.Write("Choose a year to solve (2015-2020) or press Enter to solve all years\t");
 
-            string input = Console.ReadLine();
-            int daySelected;
+            string yearInput = Console.ReadLine();
+            int yearSelected;
 
-            if (Int32.TryParse(input, out daySelected)) //TODO: Sanitise this properly...
+            if (Int32.TryParse(yearInput, out yearSelected))
             {
-                SolveDay(daySelected);
+                Console.Write("\nChoose a day to solve (1-25) or press Enter to solve all days\t");
+
+                string dayInput = Console.ReadLine();
+                int daySelected;
+
+                if (Int32.TryParse(dayInput, out daySelected))
+                {
+                    SolveDay(daySelected, yearSelected);
+                }
+                else
+                {
+                    SolveYear(yearSelected);
+                }
             }
             else
             {
-                switch (input.ToLower())
-                {
-                    case "all":
-                        SolveAll();
-                        break;
-                    default:
-                        SolveDay(6);
-                        break;
-                }
+                SolveAll();
             }
         }
 
@@ -75,54 +76,77 @@ namespace AdventOfCode
             }
         }
 
-        public static void SolveDay(int d)
+        public static void SolveDay(int d, int y)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n================");
-            Console.WriteLine(" Day {0} Selected", d);
-            Console.WriteLine("================\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("=============", Color.Green);
+            Console.WriteLine(" {0} - Day {1}", y, d, Color.Green);
+            Console.WriteLine("=============\n", Color.Green);
 
             Stopwatch timer = new Stopwatch();
-            Type t = Type.GetType("AdventOfCode._2020.Day" + d);
+            Type t = Type.GetType("AdventOfCode._" + y + ".Day" + d);
 
             timer.Start();
 
             try
             {
-                BaseDay day = (BaseDay)Activator.CreateInstance(t);
+                var day = (DayBase)Activator.CreateInstance(t);
                 day.Solve();
 
                 timer.Stop();
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Day {0} Solved in {1}ms", d, timer.ElapsedMilliseconds);
+                Console.WriteLine("Solved in {0}ms\n", timer.ElapsedMilliseconds);
             }
             catch
             {
-                if (d < 1 || d > 26)
+                if (d < 1 || d > 25)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Pick a number between 1-25");
+                    Console.WriteLine("Pick a day between 1 and 25", Color.Red);
+                }
+                else if (y < 2015 || y > 2020)
+                {
+                    Console.WriteLine("Pick a year between 2015 and 2020", Color.Red);
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("We've not had that day yet!");
+                    Console.WriteLine("A solution for that day hasn't been completed yet!", Color.Yellow);
                 }
             }
+        }
+        public static void SolveYear(int y)
+        {
+            Console.WriteLine("\n============================", Color.Green);
+            Console.WriteLine(" All Days for {0} Selected", y, Color.Green);
+            Console.WriteLine("============================\n", Color.Green);
+
+            List<Type> listOfDays = Assembly.GetExecutingAssembly().GetTypes()
+                      .Where(t => t.Namespace == "AdventOfCode._" + y)
+                      .Where(t => t.Name.StartsWith("Day"))
+                      .ToList();
+
+            Stopwatch timer = new Stopwatch();
+
+            timer.Start();
+
+            for (int i = 1; i <= listOfDays.Count; i++)
+            {
+                SolveDay(i, y);
+            }
+
+            timer.Stop();
+
+            Console.WriteLine("==============================", Color.Yellow);
+            Console.WriteLine(" Total Execution Time: {0}ms", timer.ElapsedMilliseconds, Color.Yellow);
+            Console.WriteLine("==============================", Color.Yellow);
         }
 
         public static void SolveAll()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n===================");
-            Console.WriteLine(" All Days Selected");
-            Console.WriteLine("===================\n");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n=================================", Color.Green);
+            Console.WriteLine(" All Days for All Years Selected", Color.Green);
+            Console.WriteLine("=================================\n", Color.Green);
 
             List<Type> listOfDays = Assembly.GetExecutingAssembly().GetTypes()
-                      .Where(t => t.Namespace == "AdventOfCode._2020")
+                      .Where(t => t.Namespace.StartsWith("AdventOfCode._"))
                       .Where(t => t.Name.StartsWith("Day"))
                       .ToList();
 
@@ -130,28 +154,26 @@ namespace AdventOfCode
 
             for (int i = 1; i <= listOfDays.Count; i++)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("=========");
-                Console.WriteLine(" Day {0}", i);
-                Console.WriteLine("=========\n");
-                Console.ForegroundColor = ConsoleColor.White;
+                string year = listOfDays.ElementAt(i - 1).Namespace.Substring(listOfDays.ElementAt(i - 1).Namespace.Length - 4);
+                Console.WriteLine("=============", Color.Green);
+                Console.WriteLine(" {0} Day {1}", year, i, Color.Green);
+                Console.WriteLine("=============\n", Color.Green);
 
                 Stopwatch timer = new Stopwatch();
 
                 timer.Start();
 
-                BaseDay day = (BaseDay)Activator.CreateInstance(listOfDays.ElementAt(i - 1));
+                var day = (DayBase)Activator.CreateInstance(listOfDays.ElementAt(i - 1));
                 day.Solve();
 
                 timer.Stop();
 
-                Console.WriteLine("Day {0} Solved in {1}ms\n", i, timer.ElapsedMilliseconds);
+                Console.WriteLine("Solved in {0}ms\n", timer.ElapsedMilliseconds);
                 totalTime += timer.ElapsedMilliseconds;
             }
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("==============================");
-            Console.WriteLine(" Total Execution Time: {0}ms", totalTime);
-            Console.WriteLine("==============================");
+            Console.WriteLine("==============================", Color.Yellow);
+            Console.WriteLine(" Total Execution Time: {0}ms", totalTime, Color.Yellow);
+            Console.WriteLine("==============================", Color.Yellow);
         }
     }
 }

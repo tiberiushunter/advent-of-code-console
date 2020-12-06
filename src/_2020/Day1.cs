@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AdventOfCode._2020
 {
-    class Day1 : BaseDay
+    class Day1 : DayBase
     {
         private readonly string _input = Program.GetInput(2020, 1);
         private int[] _arr;

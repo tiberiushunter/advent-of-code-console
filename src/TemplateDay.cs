@@ -1,7 +1,7 @@
 
 namespace AdventOfCode
 {
-    class TemplateDay : BaseDay
+    class TemplateDay : DayBase
     {
         private readonly string _input = string.Empty;//Program.GetInput(2020, x);
 
