@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using System.IO;
+using System.Text;
 
 namespace AdventOfCode
 {
@@ -67,13 +69,35 @@ namespace AdventOfCode
             }
         }
 
+        /// <summary>
+        /// Returns the input for a given year and day.
+        /// </summary>
+        /// <remarks>
+        /// If the input file doesn't exist locally it'll fetch the input from AoC and store it
+        /// in the /input directory to prevent frequent calls to AoC servers.
+        /// </remarks>
+        /// <param name="year">Year of AoC input to fetch</param>
+        /// <param name="day">Day of AoC input to fetch</param>
+        /// <returns>String challenge input</returns>
         public static string GetInput(int year, int day)
         {
-            using (var client = new WebClient())
+            string path = @".\input\" + year + " - Day " + day + ".txt";
+            DirectoryInfo di = Directory.CreateDirectory(@".\input\");
+
+            if (!File.Exists(path))
             {
-                client.Headers.Add(HttpRequestHeader.Cookie, "session=" + Program.aocSessionKey);
-                return client.DownloadString("https://adventofcode.com/" + year + "/day/" + day + "/input").Trim();
+                using (FileStream fs = File.Create(path))
+                {
+                    using (var client = new WebClient())
+                    {
+                        client.Headers.Add(HttpRequestHeader.Cookie, "session=" + Program.aocSessionKey);
+
+                        Byte[] input = new UTF8Encoding(true).GetBytes(client.DownloadString("https://adventofcode.com/" + year + "/day/" + day + "/input").Trim());
+                        fs.Write(input, 0, input.Length);
+                    }
+                }
             }
+            return File.ReadAllText(path);
         }
 
         public static void SolveDay(int d, int y)
@@ -96,7 +120,7 @@ namespace AdventOfCode
 
                 Console.WriteLine("Solved in {0}ms\n", timer.ElapsedMilliseconds);
             }
-            catch
+            catch (Exception e)
             {
                 if (d < 1 || d > 25)
                 {
@@ -108,7 +132,8 @@ namespace AdventOfCode
                 }
                 else
                 {
-                    Console.WriteLine("A solution for that day hasn't been completed yet!", Color.Yellow);
+                    Console.WriteLine(e.ToString());
+                    // Console.WriteLine("A solution for that day hasn't been completed yet!", Color.Yellow);
                 }
             }
         }
