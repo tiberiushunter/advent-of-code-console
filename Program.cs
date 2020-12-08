@@ -189,7 +189,7 @@ namespace AdventOfCode
         /// Solves all challenges stored
         /// </summary>
         /// <remarks>
-        /// This internally calls SolvesYear() recursively for each year detected from the namespaces on file.
+        /// This internally calls SolveYear() recursively for each year detected from the namespaces on file.
         /// </remarks>
         /// <seealso cref="SolveYear(int)"/>
         /// <returns>Console output of the solutions for both parts of each day of each year along with a total execution time.</returns>
