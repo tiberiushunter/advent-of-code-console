@@ -76,12 +76,12 @@ namespace AdventOfCode
         /// If the input file doesn't exist locally it'll fetch the input from AoC and store it
         /// in the <c>/input</c> directory to prevent frequent calls to AoC servers.
         /// </remarks>
-        /// <param name="year">Year of AoC input to fetch</param>
-        /// <param name="day">Day of AoC input to fetch</param>
+        /// <param name="y">Year of AoC input to fetch</param>
+        /// <param name="d">Day of AoC input to fetch</param>
         /// <returns>String challenge input</returns>
-        public static string GetInput(int year, int day)
+        public static string GetInput(int y, int d)
         {
-            string path = @".\input\" + year + " - Day " + day + ".txt";
+            string path = @".\input\" + y + " - Day " + d + ".txt";
             DirectoryInfo di = Directory.CreateDirectory(@".\input\");
 
             if (!File.Exists(path))
@@ -92,7 +92,7 @@ namespace AdventOfCode
                     {
                         client.Headers.Add(HttpRequestHeader.Cookie, "session=" + Program.aocSessionKey);
 
-                        Byte[] input = new UTF8Encoding(true).GetBytes(client.DownloadString("https://adventofcode.com/" + year + "/day/" + day + "/input").Trim());
+                        Byte[] input = new UTF8Encoding(true).GetBytes(client.DownloadString("https://adventofcode.com/" + y + "/day/" + d + "/input").Trim());
                         fs.Write(input, 0, input.Length);
                     }
                 }
@@ -100,7 +100,18 @@ namespace AdventOfCode
             return File.ReadAllText(path);
         }
 
-        public static void SolveDay(int d, int y)
+        /// <summary>
+        /// Solves a challenge for a given year and day.
+        /// </summary>
+        /// <remarks>
+        /// Additionally also prints execution time to complete the given day
+        /// which can (will) increase on first load due to delay in fetching 
+        /// input from AoC servers.
+        /// </remarks>
+        /// <param name="y">Year of AoC to solve.</param>
+        /// <param name="d">Day of AoC to solve.</param>
+        /// <returns>Console output of the solution for both parts along with execution time.</returns>
+        public static void SolveDay(int y, int d)
         {
             Console.WriteLine("=============", Color.Green);
             Console.WriteLine(" {0} - Day {1}", y, d, Color.Green);
@@ -115,9 +126,7 @@ namespace AdventOfCode
             {
                 var day = (DayBase)Activator.CreateInstance(t);
                 day.Solve();
-
                 timer.Stop();
-
                 Console.WriteLine("Solved in {0}ms\n", timer.ElapsedMilliseconds);
             }
             catch
@@ -136,6 +145,16 @@ namespace AdventOfCode
                 }
             }
         }
+
+        /// <summary>
+        /// Solves a challenge for a given year.
+        /// </summary>
+        /// <remarks>
+        /// This internally calls SolveDay() recursively for each day in the given year.
+        /// </remarks>
+        /// <seealso cref="SolveDay(int, int)"/>
+        /// <param name="y">Year of AoC to solve.</param>
+        /// <returns>Console output of the solutions for both parts of each day along with a total execution time.</returns>
         public static void SolveYear(int y)
         {
             Console.WriteLine("\n============================", Color.Green);
@@ -145,54 +164,60 @@ namespace AdventOfCode
             List<Type> listOfDays = Assembly.GetExecutingAssembly().GetTypes()
                       .Where(t => t.Namespace == "AdventOfCode._" + y)
                       .Where(t => t.Name.StartsWith("Day"))
-                      .ToList();
-
-            Stopwatch timer = new Stopwatch();
-
-            timer.Start();
-
-            for (int i = 1; i <= listOfDays.Count; i++)
-            {
-                SolveDay(i, y);
-            }
-
-            timer.Stop();
-
-            Console.WriteLine("==============================", Color.Yellow);
-            Console.WriteLine(" Total Execution Time: {0}ms", timer.ElapsedMilliseconds, Color.Yellow);
-            Console.WriteLine("==============================", Color.Yellow);
-        }
-
-        public static void SolveAll()
-        {
-            Console.WriteLine("\n=================================", Color.Green);
-            Console.WriteLine(" All Days for All Years Selected", Color.Green);
-            Console.WriteLine("=================================\n", Color.Green);
-
-            List<Type> listOfDays = Assembly.GetExecutingAssembly().GetTypes()
-                      .Where(t => t.Namespace.StartsWith("AdventOfCode._"))
-                      .Where(t => t.Name.StartsWith("Day"))
+                      .OrderBy(t => t.Name)
                       .ToList();
 
             long totalTime = 0L;
 
-            for (int i = 1; i <= listOfDays.Count; i++)
+            for (int d = 1; d <= listOfDays.Count; d++)
             {
-                string year = listOfDays.ElementAt(i - 1).Namespace.Substring(listOfDays.ElementAt(i - 1).Namespace.Length - 4);
-                Console.WriteLine("=============", Color.Green);
-                Console.WriteLine(" {0} Day {1}", year, i, Color.Green);
-                Console.WriteLine("=============\n", Color.Green);
+                Stopwatch timer = new Stopwatch();
+
+                timer.Start();
+                SolveDay(y, d);
+                timer.Stop();
+
+                totalTime += timer.ElapsedMilliseconds;
+            }
+
+            Console.WriteLine("=======================================", Color.Yellow);
+            Console.WriteLine(" Total Execution Time for {0}: {1}ms", y, totalTime, Color.Yellow);
+            Console.WriteLine("=======================================", Color.Yellow);
+        }
+
+        /// <summary>
+        /// Solves all challenges stored
+        /// </summary>
+        /// <remarks>
+        /// This internally calls SolvesYear() recursively for each year detected from the namespaces on file.
+        /// </remarks>
+        /// <seealso cref="SolveYear(int)"/>
+        /// <returns>Console output of the solutions for both parts of each day of each year along with a total execution time.</returns>
+        public static void SolveAll()
+        {
+            Console.WriteLine("\n=================================", Color.Green);
+            Console.WriteLine(" All Days for All Years Selected", Color.Green);
+            Console.WriteLine("=================================", Color.Green);
+
+            List<string> years = Assembly.GetExecutingAssembly().GetTypes()
+                      .Where(t => t.Namespace.StartsWith("AdventOfCode._"))
+                      .OrderBy(t => t.Namespace)
+                      .Select(t => t.Namespace)
+                      .Distinct()
+                      .ToList();
+
+            long totalTime = 0L;
+
+            for (int i = 1; i <= years.Count; i++)
+            {
+                string year = years.ElementAt(i - 1).Substring(years.ElementAt(i - 1).Length - 4);
 
                 Stopwatch timer = new Stopwatch();
 
                 timer.Start();
-
-                var day = (DayBase)Activator.CreateInstance(listOfDays.ElementAt(i - 1));
-                day.Solve();
-
+                SolveYear(Int32.Parse(year));
                 timer.Stop();
 
-                Console.WriteLine("Solved in {0}ms\n", timer.ElapsedMilliseconds);
                 totalTime += timer.ElapsedMilliseconds;
             }
             Console.WriteLine("==============================", Color.Yellow);
