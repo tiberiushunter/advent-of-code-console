@@ -3,14 +3,14 @@ namespace AdventOfCode
 {
     class TemplateBase : DayBase
     {
-        private readonly string _input = Program.GetInput(2020, 8);
+        private readonly string _input;
 
         /// <summary>
         /// --- Day 0: xyz ---
         /// </summary>
         public TemplateBase()
         {
-
+            _input = Program.GetInput(2020, 8);
         }
 
         /// <summary>
