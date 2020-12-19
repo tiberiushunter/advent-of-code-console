@@ -44,7 +44,7 @@ namespace AdventOfCode._2020
                 spokenNums[_startingNumbers[i]] = i + 1;
                 current = _startingNumbers[i + 1];
             }
-            
+
             for (int i = _startingNumbers.Length - 1; i < numOfTurns - 1; i++)
             {
                 int spokenNum = spokenNums[current];
