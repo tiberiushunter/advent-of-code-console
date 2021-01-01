@@ -82,7 +82,7 @@ Project Link: [GitHub][project-url]
 [.net]: https://dotnet.microsoft.com/
 [.net-sdk]: https://dotnet.microsoft.com/download/
 
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2021.svg?style=for-the-badge
 
 [contributors-shield]: https://img.shields.io/github/contributors/tiberiushunter/advent-of-code.svg?style=for-the-badge
 [contributors-url]: https://github.com/tiberiushunter/advent-of-code/graphs/contributors
